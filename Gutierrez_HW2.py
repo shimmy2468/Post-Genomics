@@ -119,25 +119,10 @@ def writecsv(inputfile, header):
             y = tumorAD[1]
             z = tumorAD[2]
 
-            if (x/sum <= 0.05 and y/sum <= 0.05) or (x/sum <= 0.05 and z/sum <= 0.05) or (y/sum <= 0.05 and z/sum <= 0.05):
-                pass
+            if (x/sum >= 0.05 and y/sum >= 0.05) or (x/sum >= 0.05 and z/sum >= 0.05) or (y/sum >= 0.05 and z/sum >= 0.05):
+                continue
             else:
-                curr_var.append(record.CHROM)
-                left.append(record.POS)
-                right.append(record.POS + len(record.ALT))
-                ref_seq.append(record.REF)
-                if y >= z: # if the first alt count is bigger
-                    alt_seq.append(str(record.ALT[0]))
-                    refct.append(x)
-                    altct.append(y)
-                else:
-                    alt_seq.append(str(record.ALT[1]))
-                    refct.append(x)
-                    altct.append(z)
-                info.append(str(record.INFO))
-                lists = curr_var + left + right + ref_seq + alt_seq + var_score + info
-                tumor_var.append(lists)
-
+                pass
         ########only 1 base for the ALT sequence
         else:
             sum = tumorAD[0] + tumorAD[1]
@@ -175,26 +160,11 @@ def writecsv(inputfile, header):
             y = normalAD[1]
             z = normalAD[2]
 
-            if (x/sum <= 0.05 and y/sum <= 0.05) or (x/sum <= 0.05 and z/sum <= 0.05) or (y/sum <= 0.05 and z/sum <= 0.05):
-                pass
+            if (x/sum >= 0.05 and y/sum >= 0.05) or (x/sum >= 0.05 and z/sum >= 0.05) or (y/sum >= 0.05 and z/sum >= 0.05):
+                continue
             else:
-                curr_var1.append(record.CHROM)
-                left1.append(record.POS)
-                right1.append(record.POS + len(record.ALT))
-                ref_seq1.append(record.REF)
-                # again checking which alt count is bigger
-                if y >= z:
-                    alt_seq1.append(str(record.ALT[0]))
-                    refct1.append(x)
-                    altct1.append(y)
-                else:
-                    alt_seq1.append(str(record.ALT[1]))
-                    refct1.append(x)
-                    altct1.append(z)
-                info.append(str(record.INFO))
-                lists = curr_var1 + left1 + right1 + ref_seq1 + alt_seq1 + var_score + info
-                normal_var.append(lists)
-                
+                pass
+                               
         ########only 1 base for the ALT sequence
         else:
             sum = normalAD[0] + normalAD[1]
@@ -312,11 +282,11 @@ def writecsv(inputfile, header):
 
 
 ## Make sure you change the directory to where your VCF files are saved on your device
-# os.chdir("/Users/abataycan/AML/AMLFiles")
-# files = os.listdir()
+os.chdir("/shared/jdgutierrez7/PostGenomics/VCF_files")
+files = os.listdir()
 #
-# for file in files:
-#     writecsv(file, AMLheader)
+for file in files:
+    writecsv(file, AMLheader)
 
 
 
