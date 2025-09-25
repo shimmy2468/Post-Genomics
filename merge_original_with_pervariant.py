@@ -1,32 +1,6 @@
 import pandas as pd
+from pathlib import Path
 
-# Read the CSV file
-df = pd.read_csv("Final_Normal.csv")
-
-# Extract required columns and create lines for both strands (1 and -1)
-results = []
-for _, row in df.iterrows():
-    # Extract chromosome (remove 'chr' prefix)
-    chromosome = str(row.iloc[2]).replace('chr', '')
-    # Extract position left coordinate
-    position = row.iloc[3]
-    # Extract reference and alternative alleles
-    ref_allele = row.iloc[5]  # ref_seq
-    if row.iloc[6] == row.iloc[5]:  # because there are two var_seq columns
-        alt_allele = row.iloc[7]  # var_seq2
-    else:
-        alt_allele = row.iloc[6]  # var_seq1
-
-    # Create one line for the positive strand (1)
-    line_pos = f"chromosome {chromosome} {position} {ref_allele} {alt_allele} 1"
-    results.append(line_pos)
-
-# Write to output file
-with open("Final_Normal_forNexus.txt", 'w') as f:
-    for line in results:
-        f.write(line + '\n')
-
-# For clean merging of the original and pervariant files
 
 def normalize_chrom(x):
     if pd.isna(x):
@@ -113,8 +87,6 @@ if final['alt_norm'].notna().any() and pervar['alt_norm'].notna().any():
         keys_final.append('alt_norm')
         keys_pervar.append('alt_norm')
 
-# Most of the code above is to make sure I get the right keys for merging with the data being so inconsistent
-
 print('Merge keys chosen:', keys_final)
 
 # Select columns from pervar to merge - exclude columns used for joining
@@ -133,4 +105,4 @@ matches = merged[keys_final].notna().all(axis=1).sum()
 total = len(merged)
 print(f'Matched rows (non-null join keys): approx {matches} / {total}')
 
-# Most of the code references 'norm', but I just change the paths for the normal and tumor files respectively with the script remaining the same. I just run it twice
+# Most of the code references 'norm', but I just change the paths for the normal and tumor files respectively with the script remaining the same
