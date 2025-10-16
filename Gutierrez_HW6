@@ -1,0 +1,16 @@
+import pandas as pd
+
+# First part
+Normal_subset = pd.read_csv('Final_Normal.csv')
+Normal_subset = Normal_subset[["chrom", "left", "ref_seq", "alt_seq", "Patient_ID", "VCF_ID"]]
+print(Normal_subset['Patient_ID'].unique())
+
+Tumor_subset = pd.read_csv('Final_Tumor.csv')
+Tumor_subset = Tumor_subset[["chrom", "left", "ref_seq", "alt_seq", "Patient_ID", "VCF_ID"]]
+print(Tumor_subset['Patient_ID'].unique())
+
+
+Normal_subset = Normal_subset[["chrom", "left", "ref_seq", "alt_seq"]]
+Tumor_subset = Tumor_subset[["chrom", "left", "ref_seq", "alt_seq"]]
+
+Normal_subset['N#'] = 
